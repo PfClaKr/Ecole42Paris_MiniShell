@@ -3,40 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychun <ychun@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aboyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 19:10:22 by ychun             #+#    #+#             */
-/*   Updated: 2021/12/02 22:23:29 by ychun            ###   ########.fr       */
+/*   Created: 2022/11/08 15:34:03 by aboyer            #+#    #+#             */
+/*   Updated: 2022/11/08 15:34:06 by aboyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+int	check_sep(char ch, const char *charset)
+{
+	int	i;
+
+	i = 0;
+	while (charset[i])
+	{
+		if (ch == charset[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ind_right(char const *s1, char const *set)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && check_sep(s1[i], set))
+		i++;
+	return (i);
+}
+
+int	ind_left(char const *s1, char const *set)
+{
+	int	i;
+
+	i = ft_strlen(s1);
+	while (i > 0 && check_sep(s1[i - 1], set))
+		i--;
+	return (i);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t		front;
-	size_t		back;
-	char		*new_s1;
+	int		i;
+	int		start;
+	int		end;
+	char	*str;
 
-	front = 0;
-	back = ft_strlen(s1);
-	if (!s1)
-		return (0);
-	if (!set)
-		return (ft_strdup(s1));
-	while (s1[front] && ft_strchr(set, s1[front]))
-		front++;
-	while (s1[back - 1] && ft_strchr(set, s1[back - 1]))
+	i = 0;
+	start = ind_right(s1, set);
+	end = ind_left(s1, set);
+	if (start > end)
 	{
-		if (back - 1 < 1)
-			break ;
-		back--;
+		str = malloc(sizeof(char));
+		str[0] = 0;
+		return (str);
 	}
-	if (front >= back)
-		return (ft_strdup(""));
-	new_s1 = (char *)malloc(sizeof(char) * (back - front + 1));
-	if (!new_s1)
-		return (0);
-	ft_strlcpy(new_s1, s1 + front, back - front + 1);
-	return (new_s1);
+	str = (char *)malloc(sizeof(char) * (end - start) + 1);
+	if (!str)
+		return (NULL);
+	while (start < end)
+	{
+		str[i] = s1[start];
+		i++;
+		start++;
+	}
+	str[i] = 0;
+	return (str);
 }

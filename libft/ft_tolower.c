@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychun <ychun@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aboyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 17:59:39 by ychun             #+#    #+#             */
-/*   Updated: 2021/12/02 19:31:30 by ychun            ###   ########.fr       */
+/*   Created: 2022/11/08 11:14:19 by aboyer            #+#    #+#             */
+/*   Updated: 2022/11/08 11:14:21 by aboyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static int	ft_check(int c)
-{
-	return ((65 <= c) && (90 >= c));
-}
-
 int	ft_tolower(int c)
 {
-	if (ft_check(c))
+	if (c >= 65 && c <= 90)
 		return (c + 32);
 	return (c);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychun <ychun@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 20:09:44 by ychun             #+#    #+#             */
-/*   Updated: 2021/11/27 20:11:42 by ychun            ###   ########.fr       */
+/*   Created: 2022/11/09 14:34:15 by aboyer            #+#    #+#             */
+/*   Updated: 2023/02/18 01:12:30 by ychun            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	if (!s || fd < 0)
-		return ;
-	write (fd, s, ft_strlen(s));
+	write(fd, s, ft_strlen(s));
 }

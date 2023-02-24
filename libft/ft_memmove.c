@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychun <ychun@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aboyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 16:49:34 by ychun             #+#    #+#             */
-/*   Updated: 2021/12/02 19:39:06 by ychun            ###   ########.fr       */
+/*   Created: 2022/11/07 16:45:52 by aboyer            #+#    #+#             */
+/*   Updated: 2022/11/07 16:45:53 by aboyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*new_dest;
-	unsigned char	*new_src;
+	size_t	i;
+	char	*str_src;
+	char	*str_dest;
 
-	if (dest == src || n == 0)
-		return (dest);
-	if (dest < src)
+	i = 0;
+	str_src = (char *)src;
+	str_dest = (char *)dest;
+	if (str_src < str_dest)
 	{
-		new_dest = (unsigned char *)dest;
-		new_src = (unsigned char *)src;
-		while (n--)
-			*new_dest++ = *new_src++;
+		while (n-- > 0)
+			str_dest[n] = str_src[n];
 	}
 	else
 	{
-		new_dest = (unsigned char *)dest + (n - 1);
-		new_src = (unsigned char *)src + (n - 1);
-		while (n--)
-			*new_dest-- = *new_src--;
+		while (i < n)
+		{
+			str_dest[i] = str_src[i];
+			i++;
+		}
 	}
-	return ((unsigned char *)dest);
+	return (dest);
 }

@@ -3,32 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychun <ychun@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aboyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/26 17:20:20 by ychun             #+#    #+#             */
-/*   Updated: 2021/11/27 18:19:21 by ychun            ###   ########.fr       */
+/*   Created: 2022/11/08 13:43:57 by aboyer            #+#    #+#             */
+/*   Updated: 2022/11/08 13:43:59 by aboyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t	len_hay;
-	size_t	len_nee;
+	size_t	i;
+	size_t	i2;
+	size_t	little_len;
 
-	len_hay = ft_strlen(haystack);
-	len_nee = ft_strlen(needle);
-	if (!*needle)
-		return ((char *)haystack);
-	if (len_hay < len_nee || len < len_nee)
-		return (0);
-	while (haystack && len_hay >= len_nee && len >= len_nee)
+	i = 0;
+	i2 = 0;
+	little_len = 0;
+	while (little[little_len])
+		little_len++;
+	if (little_len == 0)
+		return ((char *)big);
+	while (big[i] && i < len)
 	{
-		if (!(ft_memcmp(haystack, needle, len_nee)))
-			return ((char *)haystack);
-		haystack++;
-		len--;
+		while (little[i2] == big[i + i2] && i + i2 < len)
+		{
+			if (i2 == little_len - 1)
+				return ((char *)big + i);
+			i2++;
+		}
+		i2 = 0;
+		i++;
 	}
 	return (0);
 }

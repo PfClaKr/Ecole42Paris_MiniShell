@@ -3,55 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychun <ychun@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aboyer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 20:25:47 by ychun             #+#    #+#             */
-/*   Updated: 2021/12/02 19:28:52 by ychun            ###   ########.fr       */
+/*   Created: 2022/11/09 13:14:24 by aboyer            #+#    #+#             */
+/*   Updated: 2022/11/09 13:14:25 by aboyer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_intlen(int n)
+int	get_len(int n)
 {
-	int	result;
+	int	i;
 
-	result = 0;
-	if (n <= 0)
-		result = 1;
-	while (n != 0)
+	i = 0;
+	if (n == -2147483648)
+		return (11);
+	if (n == 0)
+		return (1);
+	if (n < 0)
 	{
-		n /= 10;
-		result++;
+		n = -n;
+		i++;
 	}
-	return (result);
+	while (n > 0)
+	{
+		n = n / 10;
+		i++;
+	}
+	return (i);
 }
 
 char	*ft_itoa(int n)
 {
-	char		*str;
-	int			len_n;
-	int			flag;
-	long int	cpy_n;
+	char	*result;
+	int		len;
+	long	nb;
 
-	len_n = ft_intlen(n);
-	flag = 1;
-	cpy_n = n;
-	if (n < 0)
+	len = get_len(n);
+	nb = (long)n;
+	result = (char *)malloc(sizeof(char) * len + 1);
+	if (!result)
+		return (NULL);
+	result[len--] = '\0';
+	if (nb == 0)
+		result[0] = '0';
+	if (nb < 0)
 	{
-		flag *= -1;
-		cpy_n *= -1;
+		result[0] = '-';
+		nb = -nb;
 	}
-	str = (char *)malloc(sizeof(char) * len_n + 1);
-	if (!str)
-		return (0);
-	str[len_n] = '\0';
-	while (len_n-- > 0)
+	while (nb > 0)
 	{
-		str[len_n] = '0' + (cpy_n % 10);
-		cpy_n /= 10;
+		result[len] = '0' + (nb % 10);
+		nb = nb / 10;
+		len--;
 	}
-	if (flag == -1)
-		str[0] = '-';
-	return (str);
+	return (result);
 }
